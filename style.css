@@ -1,0 +1,15 @@
+.small-header {
+    font-weight: bold;
+    text-align: center;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.column {
+    display: inline-block;
+    width: 50%;
+}
+
+.launch {
+    text-align: center;
+}
