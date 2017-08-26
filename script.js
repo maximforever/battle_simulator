@@ -356,7 +356,7 @@ function changeStat(element, direction){
                 document.getElementById(parent).innerHTML = footmanStats.speed;
             }
             break;
-        case "footman-speed":
+        case "footman-hp":
             if((footmanStats.hp + change) > 0){
                 footmanStats.hp += change;
                 document.getElementById(parent).innerHTML = footmanStats.hp;
