@@ -31,7 +31,7 @@ var p2 = [];
 var p1wins = 0;                     // these variables track win rates for Players 1 and 2 - this is especially useful for multiple runs
 var p2wins = 0; 
 
-var runs = 100;                     // this is how many times we want to simulate the battle
+var runs = 10;                     // this is how many times we want to simulate the battle
 var completion;                     // this will help us track what % of the battles are completed (helpful for many runs)
 
 
@@ -89,7 +89,7 @@ var playerUnitCount = [                               // this array lets us deci
 
 /* this function cycles through the count in the playerUnitCount array we set up above and calls the Unit constructor to create the units that'll be battling */        
 
-function createUnits(callback){                                                     // we want to make sure we don't do anything until all the units are created
+function createUnits(){                                                             
 
     getBaseStats();                                                                 // get the updated base stats from the view
 
@@ -110,7 +110,7 @@ function createUnits(callback){                                                 
                     // so the ID value start at 0, and increments by one each time a unit is added 
 
                     var newUnit = new Unit(unitContainer.length, playerUnitCount[i].type, playerUnitCount[i].player, unit.strength, unit.armor, unit.speed, unit.hp);
-                    
+
                     // add the nrewly created unit to the unitContainer array
                     unitContainer.push(newUnit); 
 
@@ -121,35 +121,34 @@ function createUnits(callback){                                                 
         }
     }
 
-    callback(); // once all the units are created, proceed
 
 }
 
 
 
-function assignUnits(){                                         // call the function to create units, passing it this callback...    
+function assignUnits(){                                                             // call the function to create units we'll need for the simulation
 
     allTheUnits = [];
     p1 = [];
     p2 = [];
 
-    for(var i = 0; i < unitContainer.length; i++){                          // for each unit added to unitContainer
+    for(var i = 0; i < unitContainer.length; i++){                                  // for each unit in the unitContainer array
 
-        for(var j = 0; j < unitContainer[i].speed; j++){                    // push this unit into the allTheUnits array as many times as its speed is
-            allTheUnits.push(unitContainer[i])
+        for(var j = 0; j < unitContainer[i].speed; j++){                            // push this unit into the allTheUnits array once per point of speed (faster units are more frequent)
+            allTheUnits.push(JSON.parse(JSON.stringify(unitContainer[i])));         /* we can't simply push(unitContainer[i]), because this creates a "shallow" copy - it references the same object */
+        }                                                                           /* The whole of point of these temporary arrays is to work with copies of objects - so we must */
+                                                                                    /* stringify and parse to create independent object copies */
+
+        if(unitContainer[i].player == 1){                                           // if this unit belongs to Player 1, add it to p1[] once
+            p1.push(JSON.parse(JSON.stringify(unitContainer[i])));
         }
 
-        if(unitContainer[i].player == 1){                                   // if this unit belongs to Player 1, add it to p1[] once
-            p1.push(unitContainer[i]);
-        }
-
-        if(unitContainer[i].player == 2){                                   // if this unit belongs to Player 2, add it to p2[] once
-            p2.push(unitContainer[i]);
+        if(unitContainer[i].player == 2){                                           // if this unit belongs to Player 2, add it to p2[] once
+            p2.push(JSON.parse(JSON.stringify(unitContainer[i])));
         }
 
     };
 
-    unitContainer = [];
 
 }
 
@@ -167,7 +166,8 @@ function battle(allTheUnits, p1, p2){                                           
             defender = p1[Math.floor(Math.random()*p1.length)];
         }
 
-/*        console.log("Attacker player: " + attacker.player + ", type " + attacker.type + ", id: " + attacker.id);
+/*      
+        console.log("Attacker player: " + attacker.player + ", type " + attacker.type + ", id: " + attacker.id);
         console.log("Defender: player" + defender.player + ", type " + defender.type + ", id: " + defender.id);
         console.log("Attacker HP: " + attacker.hp);
         console.log("Defender HP: " + defender.hp);
@@ -179,14 +179,14 @@ function battle(allTheUnits, p1, p2){                                           
         } 
 
         defender.hp -= damage;                                                  // deal the damage  to the defender
-/*
-        console.log("Defender new HP: " + defender.hp);
-        console.log("---");*/
 
+/*        console.log("Defender new HP: " + defender.hp);
+        console.log("---");
+*/
 
         if(defender.hp <= 0){                                                   // check if the defender is dead; if so, remove from arrays
 
-/*            console.log("A UNIT IS DEAD: " + defender.player);*/
+//            console.log("A UNIT IS DEAD: " + defender.player);
 
             allTheUnits = allTheUnits.filter(function(unit){                    // remove the unit from the allTheUnits array by filtering
                 return unit.id != defender.id;
@@ -205,8 +205,7 @@ function battle(allTheUnits, p1, p2){                                           
             }
         }
 
-        if(p1.length > 0 && p2.length > 0){                                    // if both the p1 and p2 array still have units, run the function again until no units are left on one side
-            
+        if(p1.length > 0 && p2.length > 0){                                    // if both the p1 and p2 array still have units, run the function again until no units are left on one side     
             battle(allTheUnits, p1, p2);
         } else {
             if(p1.length <= 0){                                                 // if one of the players runs out of units (loses the battle), increment the win counter for the other player
@@ -218,7 +217,16 @@ function battle(allTheUnits, p1, p2){                                           
             var completion = ((p1wins + p2wins)/runs)*100;                      // calculate what percentage of battles has been complete
 
             if (completion%5 == 0) {                                            // print every 5% (this is helpful when running a lot of battles)
-                console.log("Percent complete: " + completion);
+                console.log("===== Percent complete: " + completion + " ========");
+                
+                document.getElementById('complete').setAttribute("style",("width:" + completion + "%"));
+
+                if(completion >= 100){
+                        document.getElementById("p1-win-rate").classList.remove("blur");
+                        document.getElementById("p2-win-rate").classList.remove("blur");
+                }
+
+                updateStats(p1wins, p2wins);
             }
 
         }
@@ -240,35 +248,49 @@ document.getElementById("run").addEventListener("click", function(){
 
 function runSimulation(){
 
+
     runs = parseInt(document.getElementById("runs").innerHTML)
-
-
+    document.getElementById("p1-win-rate").classList.add("blur");
+    document.getElementById("p2-win-rate").classList.add("blur");
 
 
     for(var i = 0; i < runs; i++){
-
-        allTheUnits = [];
-        p1 = [];
-        p2 = [];
-
-        createUnits(assignUnits);
-        
-        if(p1.length > 0 && p2.length > 0){               // if both players have units, run the battle the preset number of times
-            battle(allTheUnits, p1, p2);
-        } else {
-            console.log("One of the players has no units");
-        }
+        oneBattle(i);
     }
 
     /* we need to empty out the unit array so that we work with the correct units next time */
     unitContainer = [];
 
 
-    updateStats(p1wins, p2wins);
+ 
     completion = p1wins = p2wins = 0;
+
+
 
 }
 
+function oneBattle(i){
+
+    setTimeout(function(){
+        createUnits();
+
+        allTheUnits = [];
+        p1 = [];
+        p2 = [];
+
+        assignUnits();
+        
+        if(p1.length > 0 && p2.length > 0){               // if both players have units, run the battle the preset number of times
+            document.getElementById('complete').innerHTML = ""
+            battle(allTheUnits, p1, p2);
+        } else {
+            console.log("One of the players has no units");
+        }
+
+        unitContainer = []; 
+
+    },((1000/runs)*i))
+}
 
 
 var counts = document.getElementsByClassName("count");
@@ -422,7 +444,7 @@ function updateStats(p1wins, p2wins){
     var p1winRate = Math.round(p1wins/runs*1000)/10;
     var p2winRate = Math.round(p2wins/runs*1000)/10;
 
-    document.getElementById("run-count").innerHTML = (p1wins+p2wins);
+
     document.getElementById("p1wins").innerHTML = p1winRate;
     document.getElementById("p2wins").innerHTML = p2winRate;
 

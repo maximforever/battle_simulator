@@ -1,15 +1,120 @@
-.small-header {
-    font-weight: bold;
-    text-align: center;
-    margin-right: auto;
-    margin-left: auto;
+body{
+    margin: 0;
+    padding: 0;
+}
+ 
+.blur {
+    filter: blur(4px);
+    color: rgba(30, 30, 30, 1);
 }
 
-.column {
-    display: inline-block;
-    width: 50%;
+ .wrapper {
+    padding: 5vh;
 }
+
+.small-header {
+    font-weight: bold;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+}
+
+.right-panel-section {
+    display: inline-block;
+    height: 49%;
+    vertical-align: top;
+}
+
 
 .launch {
     text-align: center;
+}
+
+.control-panel {
+    height: 50vh;
+    border: 1px solid gray;
+}
+
+.control-panel div {
+    border: 1px solid gray;
+}
+
+.panel-section {
+    display: inline-block;
+    height: 100%;
+    vertical-align: top;
+}
+
+.panel-section-header{
+    height: 10%;
+    text-align: center;
+}
+
+#right-column{
+    width: calc(70% - 4px);     /* !!! */
+    height: 100%;
+}
+
+#left-column{
+    width: 30%;
+    height: 100%;
+}
+
+.panel-quarter {
+    display: block;
+    height: 45% ;
+}
+
+.player-units{  
+    width: calc(50% - 2px); /* !!! should be 50%*/
+    display: inline-block;
+    height: 100%;
+}
+
+/* CONTROLS */
+
+#controls {
+    height: 15%;
+}
+
+.control-section {
+    display: inline-block;
+}
+
+#run-buttons {
+    width: calc(60% - 8px);     /* !!! */
+}
+
+#launch {
+    width: 40%;
+}
+
+/* WIN RATE */
+
+#win-stats {
+    height: 70%;
+}
+
+.win-rate{
+    display: inline-block;
+    width: calc(50% - 4px);
+    font-size: 5em;
+    text-align: center; 
+}
+
+
+/* PROGRESS METER */
+
+#progress-meter {
+    background: red;
+    z-index: 0;
+    width: 100%;
+    height: 15%;
+}
+
+#complete {
+    background: green;
+    z-index: 1;
+    height: 100%;
+    width: 0%;
 }
