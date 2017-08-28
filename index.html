@@ -1,6 +1,7 @@
 <HTML>
     <HEAD> 
         <TITLE>Battle Interface</TITLE>
+        <link href="https://fonts.googleapis.com/css?family=Quattrocento|Lato:400,700" rel="stylesheet">
         <link rel = "stylesheet" type="text/css" href = "style.css"></style>
     </HEAD>
 
@@ -9,41 +10,76 @@
 
             <div class = "control-panel"><!-- 
              --><div class = "panel-section" id = "left-column">
-                    <div class = "panel-section-header">Unit Base Stats:</div>
+                    <div class = "panel-section-header"><p>Unit Base Stats</p></div>
                     <div class = "panel-quarter">
-                        <p class = "small-header">Footman Base Stats</p>
-                        <ul>
-                            <li>Strength: <span id="footman-strength"></span><span data-type = "footman-strength"><button class = "decrement">-</button><button class = "increment">+</button></span></li>
-                            <li>Armor: <span id="footman-armor"></span><span data-type = "footman-armor"><button class = "decrement">-</button><button class = "increment">+</button></span></li>
-                            <li>Speed: <span id="footman-speed"></span><span data-type = "footman-speed"><button class = "decrement">-</button><button class = "increment">+</button></span></li>
-                            <li>HP: <span id="footman-hp"></span><span data-type = "footman-hp"><button class = "decrement">-</button><button class = "increment">+</button></span></li>
-                        </ul> 
+                        <div class = "small-header">Footman Base Stats</div>
+                    
+                        <div class = "stat">
+                            <div>Strength: <span id="footman-strength"></span></div>
+                            <div data-type = "footman-strength"><button class = "decrement">-</button><button class = "increment">+</button></div>
+                        </div>
+                        <div class = "stat">
+                            <div>Armor: <span id="footman-armor"></span></div>
+                            <div data-type = "footman-armor"><button class = "decrement">-</button><button class = "increment">+</button></div>
+                        </div>
+                        <div class = "stat">
+                            <div>Speed: <span id="footman-speed"></span></div>
+                            <div data-type = "footman-speed"><button class = "decrement">-</button><button class = "increment">+</button></div>
+                        </div>
+                        <div class = "stat">
+                            <div>HP: <span id="footman-hp"></span></div>
+                            <div data-type = "footman-hp"><button class = "decrement">-</button><button class = "increment">+</button></div>
+                        </div>
                     </div>
                     <div class = "panel-quarter">
-                        <p class = "small-header">Archer Base Stats</p>
-                        <ul>
-                            <li>Strength: <span id="archer-strength"></span><span data-type = "archer-strength"><button class = "decrement">-</button><button class = "increment">+</button></span></li>
-                            <li>Armor: <span id="archer-armor"></span><span data-type = "archer-armor"><button class = "decrement">-</button><button class = "increment">+</button></span></li>
-                            <li>Speed: <span id="archer-speed"></span><span data-type = "archer-speed"><button class = "decrement">-</button><button class = "increment">+</button></span></li>
-                            <li>HP: <span id="archer-hp"></span><span data-type = "archer-hp"><button class = "decrement">-</button><button class = "increment">+</button></span></li>
-                        </ul> 
+                        <div class = "small-header">Archer Base Stats</div>
+                        
+                        <div class = "stat">
+                            <div>Strength: <span id="archer-strength"></span></div>
+                            <div data-type = "archer-strength"><button class = "decrement">-</button><button class = "increment">+</button></div>
+                        </div>
+                        <div class = "stat">
+                            <div>Armor: <span id="archer-armor"></span></div>
+                            <div data-type = "archer-armor"><button class = "decrement">-</button><button class = "increment">+</button></div>
+                        </div>
+                        <div class = "stat">
+                            <div>Speed: <span id="archer-speed"></span></div>
+                            <div data-type = "archer-speed"><button class = "decrement">-</button><button class = "increment">+</button></div>
+                        </div>
+                        <div class = "stat">
+                            <div>HP: <span id="archer-hp"></span></div>
+                            <div data-type = "archer-hp"><button class = "decrement">-</button><button class = "increment">+</button></div>
+                        </div>
+                         
                     </div>
 
                 </div><!-- 
              --><div class = "panel-section" id = "right-column">
-                    <div class = "panel-section-header">Player Units:</div>
+                    <div class = "panel-section-header"><p>Player Units</p></div>
                     <div class = "panel-quarter">                   
                         <div class = "player-units" id = "player1">
                             <div class = "small-header">Player1:</div>
-                            Footmen: <span id = "p1footmen"></span><span data-type = "p1footmen"><button class = "decrement">-</button><button class = "increment">+</button></span>
-                            <br>
-                            Archers: <span id = "p1archers"></span><span data-type = "p1archers"><button class = "decrement">-</button><button class = "increment">+</button></span>
+                            <div class = "stat">
+                                <div>Footmen: <span id = "p1footmen"></span></div><!-- 
+                             --><div data-type = "p1footmen"><button class = "decrement">-</button><button class = "increment">+</button></div>
+                                <br>
+                            </div>
+                            <div class = "stat">
+                                <div>Archers: <span id = "p1archers"></span></div><!-- 
+                             --><div data-type = "p1archers"><button class = "decrement">-</button><button class = "increment">+</button></div>
+                            </div>
                         </div><!-- 
                      --><div class = "player-units" id = "player2">
                             <div class = "small-header">Player2:</div>
-                            Footmen: <span id = "p2footmen"></span><span data-type = "p2footmen"><button class = "decrement">-</button><button class = "increment">+</button></span>
-                            <br>
-                            Archers: <span id = "p2archers"></span><span data-type = "p2archers"><button class = "decrement">-</button><button class = "increment">+</button></span>
+                            <div class = "stat">
+                                <div>Footmen: <span id = "p2footmen"></span></div><!-- 
+                             --><div data-type = "p2footmen"><button class = "decrement">-</button><button class = "increment">+</button></div>
+                                <br>
+                            </div>
+                            <div class = "stat">
+                                <div>Archers: <span id = "p2archers"></span></div><!-- 
+                             --><div data-type = "p2archers"><button class = "decrement">-</button><button class = "increment">+</button></div>
+                            </div>
 
                         </div>
                     
@@ -59,15 +95,15 @@
                                 <button class = "count" data-count = "100000">100,000</button>
                             </div>
                             <div class = "control-section" id = "launch">
-                                <button id = "run">RUN BATTLE</button>
+                                <button id = "run">Run Battle</button>
                             </div>
                         </div>
                         <div id = "win-stats">
                             <div class = "win-rate" id = "p1-win-rate">
-                                <span id = "p1wins">0</span>%
+                                <span id = "p1wins">0%</span>
                             </div>
                             <div class = "win-rate" id = "p2-win-rate">
-                                <span id = "p2wins">0</span>%
+                                <span id = "p2wins">0%</span>
                             </div>
                         </div>
                         <div id = "progress-meter">

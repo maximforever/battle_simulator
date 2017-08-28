@@ -222,8 +222,8 @@ function battle(allTheUnits, p1, p2){                                           
                 document.getElementById('complete').setAttribute("style",("width:" + completion + "%"));
 
                 if(completion >= 100){
-                        document.getElementById("p1-win-rate").classList.remove("blur");
-                        document.getElementById("p2-win-rate").classList.remove("blur");
+                        document.getElementById("p1wins").classList.remove("blur");
+                        document.getElementById("p2wins").classList.remove("blur");
                 }
 
                 updateStats(p1wins, p2wins);
@@ -250,8 +250,8 @@ function runSimulation(){
 
 
     runs = parseInt(document.getElementById("runs").innerHTML)
-    document.getElementById("p1-win-rate").classList.add("blur");
-    document.getElementById("p2-win-rate").classList.add("blur");
+    document.getElementById("p1wins").classList.add("blur");
+    document.getElementById("p2wins").classList.add("blur");
 
 
     for(var i = 0; i < runs; i++){
@@ -280,7 +280,7 @@ function oneBattle(i){
 
         assignUnits();
         
-        if(p1.length > 0 && p2.length > 0){               // if both players have units, run the battle the preset number of times
+        if(p1.length > 0 && p2.length > 0){                                 // if both players have units, run the battle the preset number of times
             document.getElementById('complete').innerHTML = ""
             battle(allTheUnits, p1, p2);
         } else {
@@ -289,7 +289,7 @@ function oneBattle(i){
 
         unitContainer = []; 
 
-    },((1000/runs)*i))
+    },((500/runs)*i))
 }
 
 
@@ -441,8 +441,8 @@ function getBaseStats(){
 
 function updateStats(p1wins, p2wins){
 
-    var p1winRate = Math.round(p1wins/runs*1000)/10;
-    var p2winRate = Math.round(p2wins/runs*1000)/10;
+    var p1winRate = Math.round(p1wins/runs*1000)/10 + "%";
+    var p2winRate = Math.round(p2wins/runs*1000)/10 + "%";
 
 
     document.getElementById("p1wins").innerHTML = p1winRate;

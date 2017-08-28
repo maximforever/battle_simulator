@@ -1,11 +1,23 @@
 body{
     margin: 0;
     padding: 0;
+    font-family: 'Lato', sans-serif;
 }
- 
+
+ul li {
+    list-style: none;  
+}
+
+button{
+    box-shadow: none;
+}
+
+
+
+
 .blur {
-    filter: blur(4px);
-    color: rgba(30, 30, 30, 1);
+    filter: blur(2px);
+    color: rgba(117, 117, 117, 1);
 }
 
  .wrapper {
@@ -17,27 +29,39 @@ body{
     margin-right: auto;
     margin-left: auto;
     text-align: center;
-}
-
-.right-panel-section {
-    display: inline-block;
-    height: 49%;
-    vertical-align: top;
+    padding: 3px;
+    background: rgba(117, 117, 117, 1);
+    margin-bottom: 10px;
 }
 
 
-.launch {
+#launch {
     text-align: center;
 }
 
-.control-panel {
-    height: 50vh;
+#run {
+    padding: 5px;
     border: 1px solid gray;
+    border-radius: 3px;
+    background: #FF9700;
+    text-transform: uppercase;
+    font-size: 1.3em;
+    font-weight: bold;
+    width: 100%;
+    height: 100%;
+    vertical-align: bottom;
+    box-shadow: 0px 0px 10px black;
 }
 
-.control-panel div {
-    border: 1px solid gray;
+#run:hover {
+    background: #FFB74F;
 }
+
+
+.control-panel {
+    height: 50vh;
+}
+
 
 .panel-section {
     display: inline-block;
@@ -48,6 +72,17 @@ body{
 .panel-section-header{
     height: 10%;
     text-align: center;
+    background: rgb(80, 80, 80);
+    color: white;
+    border: 1px solid gray;
+    margin: 2px;
+}
+
+.panel-section-header p {
+    margin: 0;
+    vertical-align: middle; 
+    padding-top: 10px;
+    text-transform: uppercase
 }
 
 #right-column{
@@ -63,18 +98,23 @@ body{
 .panel-quarter {
     display: block;
     height: 45% ;
+    border: 1px solid gray;
+    padding: 15px;
+    margin: 2px;
+    background: rgba(150,150,150, 0.2)
 }
 
 .player-units{  
-    width: calc(50% - 2px); /* !!! should be 50%*/
+    width: calc(50% - 6px); /* !!! should be 50%*/
     display: inline-block;
     height: 100%;
+    margin: 0px 2px;
 }
 
 /* CONTROLS */
 
 #controls {
-    height: 15%;
+    height: 22%;
 }
 
 .control-section {
@@ -83,11 +123,23 @@ body{
 
 #run-buttons {
     width: calc(60% - 8px);     /* !!! */
+    vertical-align: top;
 }
 
 #launch {
     width: 40%;
 }
+
+
+.stat div {
+    display: inline-block;
+    width: 49%;                 /* !!! */
+}
+
+.stat button {
+    margin: 0px 2px;
+}
+
 
 /* WIN RATE */
 
@@ -96,9 +148,10 @@ body{
 }
 
 .win-rate{
+    font-family: 'Quattrocento', serif;
     display: inline-block;
     width: calc(50% - 4px);
-    font-size: 5em;
+    font-size: 6em;
     text-align: center; 
 }
 
@@ -110,6 +163,8 @@ body{
     z-index: 0;
     width: 100%;
     height: 15%;
+    border: 1px solid black;
+    box-shadow: 0px 0px 10px gray;
 }
 
 #complete {
@@ -117,4 +172,34 @@ body{
     z-index: 1;
     height: 100%;
     width: 0%;
+}
+
+
+@media handheld, screen and (max-width: 768px) {
+
+    .wrapper {
+        padding: 1vh;
+    }
+
+    #left-column, #right-column {
+        width: 100%;
+    }
+
+    #controls {
+        height: 50%;
+    }
+
+    .panel-quarter {
+        height: 35%;
+    }
+
+    #win-stats {
+        height: 40%;
+    }
+
+    .win-rate {
+        font-size: 3em;
+    }
+
+
 }
