@@ -450,7 +450,7 @@ function getBaseStats(){
 
 function updateStats(p1wins, p2wins){
 
-    var p1winRate = Math.round(p1wins/runs*1000)/10 + "%";
+    var p1winRate = Math.round(p1wins/runs*1000)/10 + "%";                  
     var p2winRate = Math.round(p2wins/runs*1000)/10 + "%";
 
 
@@ -509,7 +509,7 @@ document.getElementById("archer-hint").addEventListener("mouseenter", function()
     console.log(this.offsetTop);
     document.getElementById("hint-box").style.top = (this.offsetTop + 20 + "px");
     document.getElementById("hint-box").style.left = (this.offsetLeft - 130 + "px");
-    document.getElementById("hint-box").innerHTML = "Archers have weak armor, but are fast and deadly. They bypass armor when they attack, dealing damage equal to their strength.";
+    document.getElementById("hint-box").innerHTML = "Archers have weak armor, but are fast and deadly. they bypass armor when they attack, dealing damage equal to their strength. They are also more likely to attack due to their higher speed.";
     document.getElementById("hint-box").style.visibility = "visible";
 });
 

@@ -228,6 +228,9 @@ button{
 
 @media handheld, screen and (max-width: 768px) {
 
+
+
+
     .wrapper {
         padding: 1vh;
     }
@@ -246,6 +249,7 @@ button{
 
     .panel-quarter {
         height: 35%;
+        font-size: 0.8em;
     }
 
     #win-stats {
