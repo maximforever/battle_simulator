@@ -477,6 +477,59 @@ document.getElementById("p1archers").innerHTML = playerUnitCount[1].count;
 document.getElementById("p2footmen").innerHTML = playerUnitCount[2].count;
 document.getElementById("p2archers").innerHTML = playerUnitCount[3].count;
 
+document.getElementById("player-units-hint").addEventListener("mouseenter", function(){
+    console.log(this.offsetLeft);
+    console.log(this.offsetTop);
+    document.getElementById("hint-box").style.top = (this.offsetTop + 20 + "px");
+    document.getElementById("hint-box").style.left = (this.offsetLeft - 130 + "px");
+    document.getElementById("hint-box").innerHTML = "Select how many archers and footmen each player has";
+    document.getElementById("hint-box").style.visibility = "visible";
+});
+
+document.getElementById("base-stats-hint").addEventListener("mouseenter", function(){
+    console.log(this.offsetLeft);
+    console.log(this.offsetTop);
+    document.getElementById("hint-box").style.top = (this.offsetTop + 20 + "px");
+    document.getElementById("hint-box").style.left = (this.offsetLeft - 130 + "px");
+    document.getElementById("hint-box").innerHTML = "Adjust the base stats for each unit";
+    document.getElementById("hint-box").style.visibility = "visible";
+});
+
+document.getElementById("footman-hint").addEventListener("mouseenter", function(){
+    console.log(this.offsetLeft);
+    console.log(this.offsetTop);
+    document.getElementById("hint-box").style.top = (this.offsetTop + 20 + "px");
+    document.getElementById("hint-box").style.left = (this.offsetLeft - 130 + "px");
+    document.getElementById("hint-box").innerHTML = "Footmen are the backbone of your army. They deal damage equal to (their strength - defending unit's armor).";
+    document.getElementById("hint-box").style.visibility = "visible";
+});
+
+document.getElementById("archer-hint").addEventListener("mouseenter", function(){
+    console.log(this.offsetLeft);
+    console.log(this.offsetTop);
+    document.getElementById("hint-box").style.top = (this.offsetTop + 20 + "px");
+    document.getElementById("hint-box").style.left = (this.offsetLeft - 130 + "px");
+    document.getElementById("hint-box").innerHTML = "Archers have weak armor, but are fast and deadly. They bypass armor when they attack, dealing damage equal to their strength.";
+    document.getElementById("hint-box").style.visibility = "visible";
+});
+
+
+
+var hints = document.getElementsByClassName("hint");
+
+for(var i = 0; i < hints.length; i ++){
+    hints[i].addEventListener("mouseleave", function(){
+        document.getElementById("hint-box").innerHTML = "";
+        document.getElementById("hint-box").style.visibility = "hidden";
+    });
+}
+
+
+
+document.getElementById("player-units-hint").addEventListener("mouseleave", function(){
+    document.getElementById("hint-box").innerHTML = "";
+    document.getElementById("hint-box").style.visibility = "hidden";
+});
 
 
 

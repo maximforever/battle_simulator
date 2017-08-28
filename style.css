@@ -16,18 +16,35 @@ button{
 #hint-box{
     z-index: 2;
     background: white;
-    min-height: 100px;
-    min-width: 250px;
+    min-height: 40px;
+    width: 120px;
     border: 1px solid black;
     position: absolute;
+    visibility: hidden;
+    padding: 10px;
+    font-size: 0.9em;
 }
 
 .hint {
     background: white;
-    height: 30px;
-    width: 30px;
+    height: 15px;
+    width: 15px;
     color: black;
     display: inline-block;
+    border: 1px solid black;
+    border-radius: 50%;
+    font-size: 0.6em;
+    color: blue;
+    position: relative;
+    vertical-align: middle;
+    vertical-align: -webkit-baseline-middle;
+    margin: 0 5px;
+}
+
+.hint .text{
+    position: absolute;
+    top: 11%;
+    left: 35%;
 }
 
 .blur {
@@ -50,6 +67,16 @@ button{
     padding: 3px;
     background: rgba(117, 117, 117, 1);
     margin-bottom: 10px;
+}
+
+.small-header p {
+    margin: 0;
+    display: inline-block;
+}
+
+.small-header .hint {
+    margin: 0 5px;
+    vertical-align: initial;
 }
 
 
@@ -94,13 +121,15 @@ button{
     color: white;
     border: 1px solid gray;
     margin: 2px;
+    min-height: 35px;
 }
 
 .panel-section-header p {
     margin: 0;
     vertical-align: middle; 
     padding-top: 10px;
-    text-transform: uppercase
+    text-transform: uppercase;
+    display: inline-block;
 }
 
 #right-column{
