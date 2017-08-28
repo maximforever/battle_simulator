@@ -534,9 +534,9 @@ document.getElementById("player-units-hint").addEventListener("mouseleave", func
 
 
 var battleDescription1 = "How does an invidual battle work? First, each unit is added into an array based on their speed. For example, archers have a base speed of 5, so they're dropped into an array five times. "
-var battleDescription2 = "Next, a random unit is picked from the array - but faster units have more copies in the array, so they're more likely to get picked. The selected is the attacking unit." 
-var battleDescription3 = "A defending unit is picked at random from the team opposite the attacker's. The attacking unit then deals damage equal to the attacker's strength minus the defender's armor (unless an archer is attacking - archers ignore armor.) "
-var battleDescription4 = "The defending unit takes damage, and is removed if HP drops to 0 or below. Then, a new attacking unit is picked at random, and the process continues until one player runs out of units and the battle is over."
+var battleDescription2 = "Next, a unit is picked from the array at random - but faster units have more copies in the array, so they're more likely to get picked. The selected unit is the attacker. " 
+var battleDescription3 = "A defending unit is picked at random from the opposing team. The attacking unit then deals damage equal to the attacker's strength minus the defender's armor (archers ignore armor and dead damage equal to their strength). "
+var battleDescription4 = "The defending unit takes damage, and is removed if HP drops to 0 or below. Then, a new attacking unit is picked at random, and the process continues until one player runs out of units, thereby losing the battle."
 
 var battleDescription = battleDescription1 + battleDescription2 + battleDescription3 + battleDescription4;
 

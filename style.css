@@ -211,6 +211,10 @@ button{
     width: 50%;
 }
 
+.change-numbers {
+    text-align: right;
+}
+
 
 .stat div {
     display: inline-block;
@@ -218,7 +222,8 @@ button{
 }
 
 .stat button {
-    margin: 0px 2px;
+    margin: 0px 4px;
+
 }
 
 
