@@ -2,6 +2,7 @@ body{
     margin: 0;
     padding: 0;
     font-family: 'Lato', sans-serif;
+    font-weight: 400;
 }
 
 ul li {
@@ -12,6 +13,20 @@ button{
     box-shadow: none;
 }
 
+
+.blur {
+    filter: blur(2px);
+    color: rgba(117, 117, 117, 1);
+}
+
+ .wrapper {
+    padding: 5vh;
+    max-width: 1600px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+/* HINT BOX */
 
 #hint-box{
     z-index: 2;
@@ -47,18 +62,37 @@ button{
     left: 35%;
 }
 
-.blur {
-    filter: blur(2px);
-    color: rgba(117, 117, 117, 1);
+/* HEADER PANEL */
+
+#intro-panel{
+    color: white;
+    border: 1px solid gray;
+    margin: 5px 0px;
 }
 
- .wrapper {
-    padding: 5vh;
-    max-width: 1600px;
-    margin-right: auto;
-    margin-left: auto;
+#intro-panel h1{
+    margin: 0;
+    font-family: 'Quattrocento', serif;
+    font-size: 2.5em;
 }
 
+
+#intro-panel p{
+    margin: 0;
+}
+
+#intro-top {
+    background: rgb(80, 80, 80);
+    padding: 10px 15px;
+}
+
+#intro-bottom {
+    background: rgba(150, 150, 150, 0.2);
+    padding: 10px 15px;
+    color: black;
+}
+
+/* CONTROL PANEL */
 .small-header {
     font-weight: bold;
     margin-right: auto;
@@ -103,14 +137,8 @@ button{
 }
 
 
-.control-panel {
-    height: 50vh;
-}
-
-
 .panel-section {
     display: inline-block;
-    height: 100%;
     vertical-align: top;
 }
 
@@ -121,7 +149,7 @@ button{
     color: white;
     border: 1px solid gray;
     margin: 2px;
-    min-height: 35px;
+    height: 41px;
 }
 
 .panel-section-header p {
@@ -133,24 +161,20 @@ button{
 }
 
 #right-column{
-    width: calc(70% - 4px);     /* !!! */
-    height: 100%;
+    width: 70%;
 }
 
 #left-column{
     width: 30%;
-    height: 100%;
 }
 
 .panel-quarter {
     display: block;
-    height: 45% ;
+    height: 180px;
     border: 1px solid gray;
     padding: 15px;
     margin: 2px;
     background: rgba(150,150,150, 0.2);
-    max-height: 200px;
-    min-height: 150px;
 }
 
 .player-units{  
@@ -174,10 +198,11 @@ button{
 #run-buttons {
     width: calc(50% - 8px);     /* !!! */
     vertical-align: top;
+    text-align: left;
 }
 
 #launch {
-    width: 49%;
+    width: 50%;
 }
 
 
@@ -205,6 +230,27 @@ button{
     text-align: center; 
 }
 
+/* COUNT BUTTONS */
+
+.count {
+    background: rgba(150,150,150, 0.2);
+    padding: 3px;
+    width: 50px;
+    display: inline-block;
+    border: 2px solid gray;
+    font-size: 0.7em;
+    margin: 1px 0px ;
+    text-align: center;
+}
+
+.count:hover {
+    background: rgba(150,150,150, 0.2);
+}
+
+#active-run {
+    background: rgba(150,150,150, 0.6);
+    border: 2px solid #FF9700;
+}
 
 /* PROGRESS METER */
 
@@ -225,6 +271,18 @@ button{
     max-width: 100%;
 }
 
+#footer {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: -5vh;
+}
+
+#footer p {
+    display: block;
+    text-align: center;
+}
+
 
 @media handheld, screen and (max-width: 768px) {
 
@@ -240,28 +298,48 @@ button{
     }
 
     #controls {
-        height: 50%;
-    }
-
-    .control-panel {
-        height: 65vh;
-    }
-
-    .panel-quarter {
-        height: 35%;
-        font-size: 0.8em;
-    }
-
-    #win-stats {
         height: 40%;
     }
 
+
+    .panel-quarter {
+        height: 130px;
+        font-size: 0.8em;
+    }
+
+    #run-buttons {
+        width: calc(70% - 8px);     /* !!! */
+    }
+
+    #launch {
+        width: 30%;
+    }
+
+    #win-stats {
+        height: 50%;
+    }
+
     .win-rate {
-        font-size: 3em;
+        font-size: 4.1em;
     }
 
     #run {
         font-size: 1.1em;
+    }
+
+    #intro-panel h1{
+        margin: 0;
+        font-family: 'Quattrocento', serif;
+        font-size: 2em;
+    }
+
+    #intro-panel p {
+        font-size: 0.9em;
+    }
+
+    #footer {
+        position: relative;
+        left: 0;
     }
 
 

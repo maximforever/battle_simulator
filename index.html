@@ -11,6 +11,14 @@
 
             <div id = "hint-box"></div>
 
+            <div id = "intro-panel">
+                <div id = "intro-top">
+                    <h1>QRL Battle Simulator</h1>
+                </div>
+                <div id = "intro-bottom">
+                    <p>This is a GUI for a battle simulator I built for <a href = "https://github.com/maximforever/qrl" target = "_blank">QRL</a>, a text-based multiplayer game I'm working on. This algorithm resolves battles between two players, each with multiple units. The simulator can also iterate through multiple runs to determine the probability of each player winning with their current units. <a>How do invidivual battles work?</a></p>
+                </div>    
+            </div>
             <div class = "control-panel"><!-- 
              --><div class = "panel-section" id = "left-column">
                     <div class = "panel-section-header"><p>Unit Base Stats</p><div class = "hint" id = "base-stats-hint"><span class = "text">?</span></div></div>
@@ -90,12 +98,13 @@
                     <div class = "panel-quarter">
                         <div id = "controls">
                             <div class = "control-section" id = "run-buttons">
-                                Battles to run: <span id = "runs"></span>
-                                <button class = "count" data-count = "10">10</button>
-                                <button class = "count" data-count = "100">100</button>
-                                <button class = "count" data-count = "1000">1,000</button>
-                                <button class = "count" data-count = "10000">10,000</button>
-                                <button class = "count" data-count = "100000">100,000</button>
+                                Runs:
+                                <span class = "count" id = "active-run" data-count = "10">10</span>
+                                <span class = "count" data-count = "100">100</span>
+                                <span class = "count" data-count = "1000">1,000</span>
+                                <span class = "count" data-count = "10000">10,000</span>
+                                <span class = "count" data-count = "100000">100,000</span>
+
                             </div>
                             <div class = "control-section" id = "launch">
                                 <button id = "run">Run Battle</button>
@@ -117,6 +126,10 @@
 
                     
                 </div>
+            </div>
+
+            <div id = "footer">
+                <p>A project by <a href = "http://maximpekarsky.com" target = "_blank">Maxim Pekarsky</a></p>
             </div>
             
             

@@ -22,19 +22,22 @@
     8. If one of the players has lost (has no more units), increment the win counter for the other player. Repeat a designated number of times (set by the runs variable.)
 */
 
-var unitContainer = [];             // this array will store unit object for the game setup
+var unitContainer = [];             // this template array will store unit objects for the game setup
 
 var allTheUnits = [];               // This array tracks units by speed - units with higher speed will be added (and picked) more often
-var p1 = [];                        // these arrays keeps track of p1 and p2 units that are alive (hp >= 0)
+var p1 = [];                        // These arrays keeps track of which Player 1 and Player 2 units are alive
 var p2 = [];
 
-var p1wins = 0;                     // these variables track win rates for Players 1 and 2 - this is especially useful for multiple runs
+var p1wins = 0;                     // these variables track win rates for Players 1 and 2 - this is useful for multiple runs
 var p2wins = 0; 
 
-var runs = 10;                      // this is how many times we want to simulate the battle
+var runs = 1000;                    // this is how many times we want to simulate the battle
 var completion;                     // this will help us track what % of the battles are completed (helpful for many runs)
 
-var running = false;                // this prevents the simulation from being run multiple times.
+var running = false;                // this prevents the simulation from being run multiple times simultaneously (and crashing)
+
+var start;                          // this will help us track how long the simulation takes
+var end;
 
 
 /* SETUP AND UNIT DATA - edit this for playtesting */
@@ -85,8 +88,13 @@ var playerUnitCount = [                               // this array lets us deci
         count: 0
     }
 ]
-       
 
+
+if(!running){                                           // this prevents multiple launches
+    runSimulation();
+}
+
+    
 /* BATTLE FUNCTIONS */
 
 /* this function cycles through the count in the playerUnitCount array we set up above and calls the Unit constructor to create the units that'll be battling */        
@@ -94,9 +102,7 @@ var playerUnitCount = [                               // this array lets us deci
 function createUnits(){  
 
     /* we need to empty out the unit array so that we work with the correct units */
-    unitContainer = [];                                                        
-
-    getBaseStats();                                                                 // get the updated base stats from the view
+    unitContainer = [];                                                             // we empty out the unitContainer array before filling it to make sure each simulation starts from scratch and doesn't use past units
 
     for(var i = 0; i < playerUnitCount.length; i++){                                // cycle through the playerUnitCount array
         if(playerUnitCount[i].count > 0){                                           // each object in playerUnitCount has a unit count. 
@@ -221,49 +227,20 @@ function battle(allTheUnits, p1, p2){                                           
             var completion = ((p1wins + p2wins)/runs)*100;                      // calculate what percentage of battles has been complete
 
             if (completion%5 == 0) {                                            // print every 5% (this is helpful when running a lot of battles)
-                console.log("===== Percent complete: " + completion + " ========");
-                
-                document.getElementById('complete').setAttribute("style",("width:" + completion + "%"));
+                console.log("Percent complete: " + completion);     
 
-                if(completion >= 100){
-                        document.getElementById("p1wins").classList.remove("blur");
-                        document.getElementById("p2wins").classList.remove("blur");
+                if(completion >= 100){                                          // keep track of when a simulation is complete
                         running = false;
+                        end = Date.now();
                 }
 
-                updateStats(p1wins, p2wins);
             }
-
         }
-
     } 
 }
 
 
-
-/* VIEW SETUP */
-
-
-
-/* RUN THE SIMULATION*/
-document.getElementById("run").addEventListener("click", function(){
-
-    console.log("Running is: " + running);
-
-    if(!running){                                           // this prevents multiple launches
-        runSimulation();
-    }
-    
-});
-
-
 function runSimulation(){
-
-    console.log("Running is: " + running);
-
-    runs = parseInt(document.getElementById("active-run").dataset.count);
-
-    console.log("Running " + runs + " times.");
 
     allTheUnits = [];
     p1 = [];
@@ -272,266 +249,30 @@ function runSimulation(){
     if((playerUnitCount[0].count + playerUnitCount[1].count) > 0 && (playerUnitCount[2].count + playerUnitCount[3].count) > 0){         // make sure both players have units                            
         
         running = true;
-        document.getElementById("p1wins").classList.add("blur");
-        document.getElementById("p2wins").classList.add("blur");
-
         createUnits();
+        start = Date.now();
 
-
-        for(var i = 0; i < runs; i++){                                                          // if both players have units, run the battle the preset number of times
-            oneBattle(i);
+        for(var i = 0; i < runs; i++){                                          // if both players have units, run the battle the preset number of times
+            assignUnits();    
+            battle(allTheUnits, p1, p2);
         }
+
+        /* console log results */
+
+        console.log("Simulated " + runs + " battles in " + (end - start) + "ms");
+        console.log("Player 1 won: " + (Math.round(p1wins/runs*1000)/10) + "% of the time.");
+        console.log("Player 1 won: " + (Math.round(p2wins/runs*1000)/10) + "% of the time.");
+
+
 
     } else {
         console.log("One of the players has no units");
     }
- 
+
     completion = p1wins = p2wins = 0;
-}
-
-function oneBattle(i){
-
-    setTimeout(function(){
-
-        assignUnits();    
-        battle(allTheUnits, p1, p2);
-    
-    },((500/runs)*i))
-}
-
-
-var counts = document.getElementsByClassName("count");
-
-for(var i = 0; i < counts.length; i++){
-    counts[i].addEventListener("click", function(){
-        if(!running){
-            setRuns(parseInt(this.dataset.count));
-            var countDivs = document.getElementsByClassName("count");
-            for(var j = 0; j < countDivs.length; j++){
-                countDivs[j].id = "";
-            }
-
-            this.id = "active-run";
-        }
-    });
-}
-
-
-var increments = document.getElementsByClassName("increment");
-
-for(var i = 0; i < increments.length; i++){
-    increments[i].addEventListener("click", function(){
-        changeStat(this, "increment");
-    });
-}
-
-var decrements = document.getElementsByClassName("decrement");
-
-for(var i = 0; i < decrements.length; i++){
-    decrements[i].addEventListener("click", function(){
-        changeStat(this, "decrement");
-    });
-}
-
-
-
-
-function changeStat(element, direction){
-
-    var parent = element.parentNode.dataset.type
-
-    var change;
-
-    if(direction == "decrement"){
-        console.log("decrementing");
-        change = -1;
-    } else {
-        console.log("incrementing");
-        change = 1;
-    }
-
-    switch(parent) {
-        case "archer-strength":
-            if((archerStats.strength + change) > 0){
-                archerStats.strength += change;
-                document.getElementById(parent).innerHTML = archerStats.strength;
-            }
-            break;
-        case "archer-armor":
-            if((archerStats.armor + change) > 0){
-                archerStats.armor += change;
-                document.getElementById(parent).innerHTML = archerStats.armor;
-            }
-            break;
-        case "archer-speed":
-            if((archerStats.speed + change) > 0){
-                archerStats.speed += change;
-                document.getElementById(parent).innerHTML = archerStats.speed;
-            }
-            break;
-        case "archer-hp":
-            if((archerStats.hp + change) > 0){
-                archerStats.hp += change;
-                document.getElementById(parent).innerHTML = archerStats.hp;
-            }
-            break;
-        case "footman-strength":
-            if((footmanStats.strength + change) > 0){
-                footmanStats.strength += change;
-                document.getElementById(parent).innerHTML = footmanStats.strength;
-            }
-            break;
-        case "footman-armor":
-            if((footmanStats.armor + change) > 0){
-                footmanStats.armor += change;
-                document.getElementById(parent).innerHTML = footmanStats.armor;
-            }
-            break;
-        case "footman-speed":
-            if((footmanStats.speed + change) > 0){
-                footmanStats.speed += change;
-                document.getElementById(parent).innerHTML = footmanStats.speed;
-            }
-            break;
-        case "footman-hp":
-            if((footmanStats.hp + change) > 0){
-                footmanStats.hp += change;
-                document.getElementById(parent).innerHTML = footmanStats.hp;
-            }
-            break;
-        case "p1footmen":
-            if((playerUnitCount[0].count + change) >= 0){
-                playerUnitCount[0].count += change;
-                document.getElementById(parent).innerHTML = playerUnitCount[0].count;
-            }
-            break;
-        case "p2footmen":
-            if((playerUnitCount[2].count + change) >= 0){
-                playerUnitCount[2].count += change;
-                document.getElementById(parent).innerHTML = playerUnitCount[2].count;
-            }
-            break;
-        case "p1archers":
-            if((playerUnitCount[1].count + change) >= 0){
-                playerUnitCount[1].count += change;
-                document.getElementById(parent).innerHTML = playerUnitCount[1].count;
-            }
-            break;
-        case "p2archers":
-            if((playerUnitCount[3].count + change) >= 0){
-                playerUnitCount[3].count += change;
-                document.getElementById(parent).innerHTML = playerUnitCount[3].count;
-            }
-            break;
-    }
-    
-
-
-
 
 }
 
-
-function setRuns(count){
-    runs = count; 
-}
-
-
-function getBaseStats(){
-
-    footmanStats.strength = parseInt(document.getElementById("footman-strength").innerHTML);
-    footmanStats.armor = parseInt(document.getElementById("footman-armor").innerHTML);
-    footmanStats.speed = parseInt(document.getElementById("footman-speed").innerHTML);
-    footmanStats.hp = parseInt(document.getElementById("footman-hp").innerHTML);
-
-    archerStats.strength = parseInt(document.getElementById("archer-strength").innerHTML);
-    archerStats.armor = parseInt(document.getElementById("archer-armor").innerHTML);
-    archerStats.speed = parseInt(document.getElementById("archer-speed").innerHTML);
-    archerStats.hp = parseInt(document.getElementById("archer-hp").innerHTML);
-
-}
-
-
-function updateStats(p1wins, p2wins){
-
-    var p1winRate = Math.round(p1wins/runs*1000)/10 + "%";                  
-    var p2winRate = Math.round(p2wins/runs*1000)/10 + "%";
-
-
-    document.getElementById("p1wins").innerHTML = p1winRate;
-    document.getElementById("p2wins").innerHTML = p2winRate;
-
-}
-
-
-document.getElementById("footman-strength").innerHTML = footmanStats.strength;
-document.getElementById("footman-armor").innerHTML = footmanStats.armor;
-document.getElementById("footman-speed").innerHTML = footmanStats.speed;
-document.getElementById("footman-hp").innerHTML = footmanStats.hp;
-
-document.getElementById("archer-strength").innerHTML = archerStats.strength;
-document.getElementById("archer-armor").innerHTML = archerStats.armor;
-document.getElementById("archer-speed").innerHTML = archerStats.speed;
-document.getElementById("archer-hp").innerHTML = archerStats.hp;
-
-document.getElementById("p1footmen").innerHTML = playerUnitCount[0].count;
-document.getElementById("p1archers").innerHTML = playerUnitCount[1].count;
-document.getElementById("p2footmen").innerHTML = playerUnitCount[2].count;
-document.getElementById("p2archers").innerHTML = playerUnitCount[3].count;
-
-document.getElementById("player-units-hint").addEventListener("mouseenter", function(){
-    console.log(this.offsetLeft);
-    console.log(this.offsetTop);
-    document.getElementById("hint-box").style.top = (this.offsetTop + 20 + "px");
-    document.getElementById("hint-box").style.left = (this.offsetLeft - 130 + "px");
-    document.getElementById("hint-box").innerHTML = "Select how many archers and footmen each player has";
-    document.getElementById("hint-box").style.visibility = "visible";
-});
-
-document.getElementById("base-stats-hint").addEventListener("mouseenter", function(){
-    console.log(this.offsetLeft);
-    console.log(this.offsetTop);
-    document.getElementById("hint-box").style.top = (this.offsetTop + 20 + "px");
-    document.getElementById("hint-box").style.left = (this.offsetLeft - 130 + "px");
-    document.getElementById("hint-box").innerHTML = "Adjust the base stats for each unit";
-    document.getElementById("hint-box").style.visibility = "visible";
-});
-
-document.getElementById("footman-hint").addEventListener("mouseenter", function(){
-    console.log(this.offsetLeft);
-    console.log(this.offsetTop);
-    document.getElementById("hint-box").style.top = (this.offsetTop + 20 + "px");
-    document.getElementById("hint-box").style.left = (this.offsetLeft - 130 + "px");
-    document.getElementById("hint-box").innerHTML = "Footmen are the backbone of your army. They deal damage equal to (strength - defending unit's armor).";
-    document.getElementById("hint-box").style.visibility = "visible";
-});
-
-document.getElementById("archer-hint").addEventListener("mouseenter", function(){
-    console.log(this.offsetLeft);
-    console.log(this.offsetTop);
-    document.getElementById("hint-box").style.top = (this.offsetTop + 20 + "px");
-    document.getElementById("hint-box").style.left = (this.offsetLeft - 130 + "px");
-    document.getElementById("hint-box").innerHTML = "Archers have weak armor, but are fast and deadly. They ignore armor when they attack, dealing damage equal to their strength. They are also more likely to attack due to their higher speed.";
-    document.getElementById("hint-box").style.visibility = "visible";
-});
-
-
-
-var hints = document.getElementsByClassName("hint");
-
-for(var i = 0; i < hints.length; i ++){
-    hints[i].addEventListener("mouseleave", function(){
-        document.getElementById("hint-box").innerHTML = "";
-        document.getElementById("hint-box").style.visibility = "hidden";
-    });
-}
-
-
-
-document.getElementById("player-units-hint").addEventListener("mouseleave", function(){
-    document.getElementById("hint-box").innerHTML = "";
-    document.getElementById("hint-box").style.visibility = "hidden";
-});
 
 
 
