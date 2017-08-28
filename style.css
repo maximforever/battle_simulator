@@ -13,7 +13,22 @@ button{
 }
 
 
+#hint-box{
+    z-index: 2;
+    background: white;
+    min-height: 100px;
+    min-width: 250px;
+    border: 1px solid black;
+    position: absolute;
+}
 
+.hint {
+    background: white;
+    height: 30px;
+    width: 30px;
+    color: black;
+    display: inline-block;
+}
 
 .blur {
     filter: blur(2px);
@@ -22,6 +37,9 @@ button{
 
  .wrapper {
     padding: 5vh;
+    max-width: 1600px;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 .small-header {
@@ -101,7 +119,9 @@ button{
     border: 1px solid gray;
     padding: 15px;
     margin: 2px;
-    background: rgba(150,150,150, 0.2)
+    background: rgba(150,150,150, 0.2);
+    max-height: 200px;
+    min-height: 150px;
 }
 
 .player-units{  
@@ -119,15 +139,16 @@ button{
 
 .control-section {
     display: inline-block;
+    text-align: center;
 }
 
 #run-buttons {
-    width: calc(60% - 8px);     /* !!! */
+    width: calc(50% - 8px);     /* !!! */
     vertical-align: top;
 }
 
 #launch {
-    width: 40%;
+    width: 49%;
 }
 
 
@@ -172,6 +193,7 @@ button{
     z-index: 1;
     height: 100%;
     width: 0%;
+    max-width: 100%;
 }
 
 
@@ -189,6 +211,10 @@ button{
         height: 50%;
     }
 
+    .control-panel {
+        height: 65vh;
+    }
+
     .panel-quarter {
         height: 35%;
     }
@@ -199,6 +225,10 @@ button{
 
     .win-rate {
         font-size: 3em;
+    }
+
+    #run {
+        font-size: 1.1em;
     }
 
 
