@@ -479,40 +479,39 @@ document.getElementById("p1archers").innerHTML = playerUnitCount[1].count;
 document.getElementById("p2footmen").innerHTML = playerUnitCount[2].count;
 document.getElementById("p2archers").innerHTML = playerUnitCount[3].count;
 
-document.getElementById("player-units-hint").addEventListener("mouseenter", function(){
-    console.log(this.offsetLeft);
-    console.log(this.offsetTop);
-    document.getElementById("hint-box").style.top = (this.offsetTop + 20 + "px");
-    document.getElementById("hint-box").style.left = (this.offsetLeft - 130 + "px");
-    document.getElementById("hint-box").innerHTML = "Select how many archers and footmen each player has";
+
+function addHint(object, description){
+
+    document.getElementById("hint-box").style.top = (object.offsetTop + 20 + "px");
+    document.getElementById("hint-box").style.left = (object.offsetLeft - 100 + "px");
+    document.getElementById("hint-box").innerHTML = description;
     document.getElementById("hint-box").style.visibility = "visible";
+}
+
+
+
+document.getElementById("master-hint").addEventListener("mouseenter", function(){
+    addHint(this, battleDescription);
+});
+
+document.getElementById("player-units-hint").addEventListener("mouseenter", function(){
+    var description = "Select how many archers and footmen each player has";
+    addHint(this, description);
 });
 
 document.getElementById("base-stats-hint").addEventListener("mouseenter", function(){
-    console.log(this.offsetLeft);
-    console.log(this.offsetTop);
-    document.getElementById("hint-box").style.top = (this.offsetTop + 20 + "px");
-    document.getElementById("hint-box").style.left = (this.offsetLeft - 130 + "px");
-    document.getElementById("hint-box").innerHTML = "Adjust the base stats for each unit";
-    document.getElementById("hint-box").style.visibility = "visible";
+    var description = "Adjust the base stats for each unit";
+    addHint(this, description);
 });
 
 document.getElementById("footman-hint").addEventListener("mouseenter", function(){
-    console.log(this.offsetLeft);
-    console.log(this.offsetTop);
-    document.getElementById("hint-box").style.top = (this.offsetTop + 20 + "px");
-    document.getElementById("hint-box").style.left = (this.offsetLeft - 130 + "px");
-    document.getElementById("hint-box").innerHTML = "Footmen are the backbone of your army. They deal damage equal to (strength - defending unit's armor).";
-    document.getElementById("hint-box").style.visibility = "visible";
+    var description = "Footmen are the backbone of your army. They deal damage equal to (strength - defending unit's armor).";
+    addHint(this, description);
 });
 
 document.getElementById("archer-hint").addEventListener("mouseenter", function(){
-    console.log(this.offsetLeft);
-    console.log(this.offsetTop);
-    document.getElementById("hint-box").style.top = (this.offsetTop + 20 + "px");
-    document.getElementById("hint-box").style.left = (this.offsetLeft - 130 + "px");
-    document.getElementById("hint-box").innerHTML = "Archers have weak armor, but are fast and deadly. They ignore armor when they attack, dealing damage equal to their strength. They are also more likely to attack due to their higher speed.";
-    document.getElementById("hint-box").style.visibility = "visible";
+    var description = "Archers have weak armor, but are fast and deadly. They ignore armor when they attack, dealing damage equal to their strength. They are also more likely to attack due to their higher speed.";
+    addHint(this, description);
 });
 
 
@@ -533,5 +532,14 @@ document.getElementById("player-units-hint").addEventListener("mouseleave", func
     document.getElementById("hint-box").style.visibility = "hidden";
 });
 
+
+var battleDescription1 = "How does an invidual battle work? First, each unit is added into an array based on their speed. For example, archers have a base speed of 5, so they're dropped into an array five times. "
+var battleDescription2 = "Next, a random unit is picked from the array - but faster units have more copies in the array, so they're more likely to get picked. The selected is the attacking unit." 
+var battleDescription3 = "A defending unit is picked at random from the team opposite the attacker's. The attacking unit then deals damage equal to the attacker's strength minus the defender's armor (unless an archer is attacking - archers ignore armor.) "
+var battleDescription4 = "The defending unit takes damage, and is removed if HP drops to 0 or below. Then, a new attacking unit is picked at random, and the process continues until one player runs out of units and the battle is over."
+
+var battleDescription = battleDescription1 + battleDescription2 + battleDescription3 + battleDescription4;
+
+console.log(battleDescription);
 
 
